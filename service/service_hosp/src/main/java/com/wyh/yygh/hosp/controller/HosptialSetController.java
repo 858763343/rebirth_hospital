@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wyh.hospitol.model.hosp.HospitalSet;
 import com.wyh.hospitol.vo.hosp.HospitalSetQueryVo;
 import com.wyh.yygh.common.result.Result;
+import com.wyh.yygh.common.utils.MD5;
 import com.wyh.yygh.hosp.service.HosptialSetService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -14,6 +15,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Random;
 
 /**
  * hosptialset
@@ -100,8 +102,12 @@ public class HosptialSetController {
     @ApiOperation(value = "添加医院设置")
     @PostMapping("saveHospSet")
     public Result saveHospSet(@RequestBody HospitalSet hospitalSet) {
-
-
+        //设置status 状态  0不能使用 1 可以使用
+        hospitalSet.setStatus(1);
+        //签名密钥
+        Random random = new Random();
+        hospitalSet.setSignKey(MD5.encrypt(System.currentTimeMillis()+""+random.nextInt(1000)));
+        //调用sevice 方法
         boolean save = hosptialSetService.save(hospitalSet);
         if (save) {
            return Result.ok();
@@ -110,6 +116,44 @@ public class HosptialSetController {
         }
 
     }
+
+    /***
+     * 根据id获取医院设置
+     */
+    @ApiOperation(value = "根据id获取医院设置")
+    @GetMapping("findHospSetById/{id}")
+    public Result findHospSetById(@PathVariable Long id){
+
+        HospitalSet findHospSetById = hosptialSetService.getById(id);
+        return Result.ok(findHospSetById);
+    }
+
+    /***
+     * 修改医院设置
+     */
+
+    @ApiOperation(value = "修改医院设置")
+    @PostMapping("updateHospSet")
+    public Result updateHospSet(@RequestBody HospitalSet hospitalSet) {
+
+        boolean updateById = hosptialSetService.updateById(hospitalSet);
+        if (updateById){
+            return Result.ok();
+        }else {
+            return Result.fail();
+        }
+    }
+
+    /**
+     * 批量删除医院设置
+     */
+        @ApiOperation(value = "批量删除医院设置")
+        @DeleteMapping("DeleteHospSetByids")
+        public Result DeleteHospSetByids(@RequestBody List<Long> idList){
+            boolean removeByIds= hosptialSetService.removeByIds(idList);
+                return Result.ok();
+        }
+
 
 
 }
