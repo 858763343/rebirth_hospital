@@ -19,6 +19,9 @@ import java.util.Random;
 
 /**
  * hosptialset
+ *
+ * @author Timo
+ * 2021/5/27
  */
 @RestController
 @Api(tags = "医院设置")
@@ -154,6 +157,36 @@ public class HosptialSetController {
                 return Result.ok();
         }
 
+    /**
+     * 医院设置锁定和解锁
+     */
 
+    @ApiOperation(value = "锁定")
+    @PutMapping(value = "LockHospSet/{id}/{status}")
+    public Result LockHospSet(@PathVariable Long id,
+                              @PathVariable Integer status){
+        //根据id 查询医院的设置信息
+        HospitalSet hospitalSet = hosptialSetService.getById(id);
+        //设置状态
+        hospitalSet.setStatus(status);
+        //调用根据id修改的方法 将设置的 status 进行更新
+        hosptialSetService.updateById(hospitalSet);
+        return Result.ok();
+    }
+
+    /***
+     * 发送签名密钥
+     */
+    @ApiOperation(value = "发送签名密钥")
+    @PutMapping(value = "sendKeyHospSet/{id}")
+    public Result sendKeyHospSet(@PathVariable Long id) {
+        //先根据id 查询
+        HospitalSet byId = hosptialSetService.getById(id);
+        //通过查询出的值获取 密钥和医院编号
+        String signKey = byId.getSignKey();     //获取签名密钥
+        String hoscode = byId.getHoscode();     //获取医院编号
+        //TODO 发送短信
+        return Result.ok();
+    }
 
 }
