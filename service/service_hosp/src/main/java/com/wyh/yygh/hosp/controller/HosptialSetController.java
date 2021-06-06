@@ -2,6 +2,7 @@ package com.wyh.yygh.hosp.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wyh.hospitol.model.hosp.HospitalSet;
 import com.wyh.hospitol.vo.hosp.HospitalSetQueryVo;
@@ -26,6 +27,7 @@ import java.util.Random;
 @RestController
 @Api(tags = "医院设置")
 @RequestMapping("admin/hosp/hospitalSet")
+@CrossOrigin
 public class HosptialSetController {
 
     @Autowired
@@ -82,10 +84,10 @@ public class HosptialSetController {
     ) {
         //创建Page 对象，传递当前页，每页记录数
         Page<HospitalSet> page = new Page<>(current, limit);
-        String hosname = hospitalSetQueryVo.getHosname();   //医院的名称
-        String hoscode = hospitalSetQueryVo.getHoscode();   //医院的编号
         //构造条件
         QueryWrapper<HospitalSet> queryWrapper = new QueryWrapper<>();
+        String hosname = hospitalSetQueryVo.getHosname();   //医院的名称
+        String hoscode = hospitalSetQueryVo.getHoscode();   //医院的编号
         //判断 名称和编号是否有值
         if (!StringUtils.isEmpty(hosname)) {
             queryWrapper.like("hosname", hospitalSetQueryVo.getHosname());
@@ -94,7 +96,7 @@ public class HosptialSetController {
             queryWrapper.eq("hoscode", hospitalSetQueryVo.getHoscode());
         }
         //调用方法实现分页的查询
-        Page<HospitalSet> setPage = hosptialSetService.page(page, queryWrapper);
+        IPage<HospitalSet> setPage = hosptialSetService.page(page, queryWrapper);
         return Result.ok(setPage);
     }
 
@@ -153,7 +155,7 @@ public class HosptialSetController {
         @ApiOperation(value = "批量删除医院设置")
         @DeleteMapping("DeleteHospSetByids")
         public Result DeleteHospSetByids(@RequestBody List<Long> idList){
-            boolean removeByIds= hosptialSetService.removeByIds(idList);
+                hosptialSetService.removeByIds(idList);
                 return Result.ok();
         }
 

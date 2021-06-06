@@ -14,6 +14,7 @@
     <modules>
         <module>service_hosp</module>
         <module>service_user</module>
+        <module>service_cmn</module>
     </modules>
 
 <dependencies>
@@ -26,6 +27,13 @@
         <groupId>com.wyh</groupId>
         <artifactId>service_util</artifactId>
         <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+
+    <dependency>
+        <groupId>com.wyh</groupId>
+        <artifactId>model</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <scope>compile</scope>
     </dependency>
 
 </dependencies>

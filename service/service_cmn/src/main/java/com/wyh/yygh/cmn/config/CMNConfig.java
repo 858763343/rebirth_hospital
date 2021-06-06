@@ -1,4 +1,4 @@
-package com.wyh.yygh.hosp.config;
+package com.wyh.yygh.cmn.config;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
@@ -8,8 +8,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@MapperScan("com.wyh.yygh.hosp.mapper")
-public class HosptialSetConfig {
+@MapperScan("com.wyh.yygh.cmn.mapper")
+public class CMNConfig {
     /**
      * 分页插件
      */
