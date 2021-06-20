@@ -11,5 +11,10 @@
 
     <artifactId>service_user</artifactId>
 
+    <dependencies>
+
+    </dependencies>
+
+
 
 </project>

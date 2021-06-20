@@ -10,17 +10,36 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>service_hosp</artifactId>
 
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+    </properties>
     <dependencies>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.wyh</groupId>
-            <artifactId>model</artifactId>
+            <artifactId>service_util</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.wyh</groupId>
+            <artifactId>service_cmn_client</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
-
     </dependencies>
 
-
-
-
+    <build>
+        <finalName>service-hosp</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>
